@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr" translate="no" class="notranslate"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="google" content="notranslate">
+<title>Test A2.2 · Vêtements, météo et futur proche</title>
+<style>
+:root{--ink:#1d2340;--soft:#5d6585;--indigo:#3b3fa3;--bg:#f2f4fb;--ok:#1f9d63;--ko:#e0483a;--mid:#e08a1e;--pb:46px}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 "Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+.w{max-width:900px;margin:0 auto;padding:0 14px 60px}
+.hero{margin:0 -14px 14px;padding:26px 24px 22px;background:#fff;color:#24306e;border:1px solid #e3e6f2;border-top:0;border-radius:0 0 28px 28px;box-shadow:0 2px 10px rgba(29,35,64,.08)}
+.hero h1{margin:0 0 4px;font-size:1.8rem;letter-spacing:.2px;color:#24306e}.hero p{margin:0;color:#24306e}
+.hero .u{display:inline-block;background:#eef0fb;color:#24306e;font-weight:700;border-radius:999px;padding:2px 14px;margin-bottom:10px;font-size:.85rem}
+/* barra de progreso fija */
+.pb{position:sticky;top:0;z-index:20;margin:0 -14px 14px;padding:6px 14px;background:#fff;border-bottom:1px solid #e3e6f2;box-shadow:0 2px 8px rgba(29,35,64,.06)}
+.pbr{display:flex;align-items:center;gap:10px;min-height:32px}
+.pbr .t{font-size:.88rem;font-weight:700;color:var(--soft);white-space:nowrap}
+.pbr .bar{flex:1;height:8px;border-radius:99px;background:#e6e9f6;overflow:hidden}.pbr .bar i{display:block;height:100%;width:0;background:var(--indigo);transition:width .2s}
+.kbt{font:inherit;font-size:.85rem;font-weight:700;color:var(--indigo);background:#fff;border:1.5px solid #c9cef0;border-radius:10px;padding:5px 10px;min-height:34px;cursor:pointer;white-space:nowrap}
+.kbk{display:none;flex-wrap:wrap;gap:6px;margin:8px 0 4px}.pb.open .kbk{display:flex}
+.kbk button{font:inherit;font-size:1.25rem;line-height:1;font-weight:600;min-width:44px;height:44px;padding:0 8px;border:1.5px solid #c9cef0;border-radius:10px;background:#fff;color:var(--indigo);cursor:pointer;-webkit-user-select:none;user-select:none}
+@media (hover:hover){.kbk button:hover{background:#eef0fb;border-color:var(--indigo)}}
+.kbk button:active{background:#dfe2fa}.kbk button.sh{font-size:.9rem;font-weight:700;padding:0 12px}.kbk button.sh.on{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.panel{background:#fff;border-radius:20px;padding:18px 20px 20px;box-shadow:0 6px 22px rgba(29,35,64,.1);margin-bottom:14px;scroll-margin-top:60px}
+.panel h2{margin:0 0 4px;font-size:1.25rem}
+.st{display:flex;align-items:flex-start;gap:10px;margin:0 0 10px!important;font-size:1.08rem!important;color:var(--indigo);line-height:1.35}
+.st .n{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--indigo);color:#fff;font-size:.95rem;font-weight:800}
+.st .m{flex:none;margin-left:auto;font-size:.8rem;font-weight:700;color:var(--soft);background:#eef0fb;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.cons p{margin:0 0 8px}.cons ul{margin:0 0 8px;padding-left:22px}.cons .fin{margin:10px 0 0;padding:8px 12px;background:#f6f7fb;border-radius:10px;font-size:.88rem;color:var(--soft)}
+.sub{margin:0 0 10px;color:var(--soft);font-size:.92rem}
+.it{padding:8px 0;border-top:1px solid #eef0f8}.it:first-of-type{border-top:0}
+.tl{line-height:2.4}.tl .lt{font-weight:800;color:var(--indigo);margin-right:6px}
+.ti{font:inherit;font-size:16px;line-height:1.2;padding:5px 8px;border:1.5px solid #c9cef0;border-radius:8px;background:#fff;color:var(--ink);margin:0 3px;vertical-align:baseline}
+.ti:focus,.lbi:focus,.lbt:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 2px #dfe2fa}
+.ti.bad,.lbi.bad,.lbt.bad{border-color:var(--ko);background:#fff1ef}
+.ti[disabled],.lbi[disabled],.lbt[disabled]{background:#f6f7fb;color:var(--soft)}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 2px}
+.opt,.chip,.vfb{font:inherit;font-size:1rem;font-weight:700;color:var(--ink);background:#fff;border:2px solid #d9dded;border-radius:12px;padding:7px 14px;min-height:42px;cursor:pointer}
+@media (hover:hover){.opt:hover:not([disabled]),.chip:hover:not([disabled]),.vfb:hover:not([disabled]){border-color:#9da3dc}}
+.opt.on,.vfb.on{border-color:var(--indigo);background:#eef0fb;box-shadow:inset 0 0 0 1.5px var(--indigo);color:var(--indigo)}
+.opt[disabled],.chip[disabled],.vfb[disabled]{cursor:default;opacity:.8}
+.gp{display:inline-block;min-width:68px;padding:0 10px;margin:0 3px;border-bottom:3px solid #c9cef0;text-align:center;font-weight:800;color:var(--indigo)}
+.gp.f{border-bottom-color:var(--indigo);background:#eef0fb;border-radius:6px 6px 0 0}
+/* ordenar */
+.oline{display:flex;flex-wrap:wrap;gap:6px;min-height:50px;padding:7px 8px;margin:6px 0;border:2px dashed #c9cef0;border-radius:12px;background:#fafbff;align-items:center}
+.oline .ph{color:#9aa1c2;font-size:.9rem}
+.opool{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 4px}
+.chip.on{border-color:var(--indigo);background:#eef0fb;color:var(--indigo)}
+.chip.sel{border-color:var(--mid);background:#fff6e8;box-shadow:inset 0 0 0 1.5px var(--mid)}
+.chip.used{opacity:.45}
+.rst{font:inherit;font-size:.82rem;font-weight:700;color:var(--soft);background:none;border:0;cursor:pointer;padding:2px 4px;text-decoration:underline}
+.bank{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;margin:0 0 10px;background:#f6f7fb;border-radius:12px;position:sticky;top:var(--pb);z-index:5}
+.gb{font:inherit;font-size:1rem;line-height:1.2;font-weight:800;color:var(--indigo);min-width:92px;min-height:36px;padding:4px 10px;margin:0 3px;background:#fff;border:2px dashed #c9cef0;border-radius:10px;cursor:pointer;vertical-align:baseline}
+.gb.f{border-style:solid;border-color:var(--indigo);background:#eef0fb}
+.gb.ov{border-color:var(--mid);background:#fff6e8}
+.read{margin:0 0 12px;padding:12px 14px;border-left:4px solid var(--indigo);background:#f6f7fb;border-radius:0 12px 12px 0;font-size:.97rem}
+.vfr{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 6px}
+.lbt{display:block;width:100%;min-height:62px;font:inherit;font-size:16px;line-height:1.4;padding:8px 10px;border:1.5px solid #c9cef0;border-radius:10px;background:#fff;color:var(--ink);resize:vertical;margin-top:4px}
+.lbi{display:block;width:100%;max-width:520px;font:inherit;font-size:16px;line-height:1.3;padding:10px 12px;border:1.5px solid #c9cef0;border-radius:8px;background:#fff;color:var(--ink)}
+.lbg{display:grid;grid-template-columns:1fr;gap:12px;margin:0 0 4px}
+.lbl{display:block;font-size:.82rem;font-weight:700;color:var(--soft);margin:0 0 3px}
+.q{margin:0 0 2px}.q .lt{font-weight:800;color:var(--indigo);margin-right:6px}
+.hint{display:block;font-size:.8rem;color:var(--soft);margin-top:2px}
+.lbr{margin-top:16px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;border:0;border-radius:12px;padding:12px 22px;color:#fff;background:var(--indigo);cursor:pointer;min-height:46px}
+@media (hover:hover){.btn:hover{filter:brightness(1.08)}}
+.btn[disabled]{background:#b9bfd6;cursor:default}
+.btn.cb2{background:#fff;color:var(--indigo);border:2px solid var(--indigo)}
+.btn.sm{padding:8px 16px;font-size:.92rem;min-height:40px}
+.lbm{margin:12px 0 0;padding:10px 14px;border-radius:12px;font-size:.95rem;line-height:1.5;display:none}
+.lbm.err{display:block;background:#fff1ef;border:1.5px solid #f3c1bb;color:#a12a20}
+.lbm.warn{display:block;background:#fff4e0;border:1.5px solid #f3cf8a;color:#92400e}
+.lba{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.lba .btn{padding:8px 16px}
+.final{text-align:center;background:linear-gradient(135deg,#fff,#eefaf3);border:3px solid #0fb5a6}
+.final .ic{font-size:2.4rem}.final p{margin:6px 0}.final .sm{font-size:.88rem;color:var(--soft)}
+.final .sc{display:inline-block;margin:8px 0;padding:8px 20px;border-radius:14px;background:#fff;border:2px solid #b8e8cd;font-size:1.15rem}
+button,label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media(max-width:700px){.panel{padding:14px 12px 16px}.hero h1{font-size:1.5rem}.tl{line-height:2.5}.gb{min-width:84px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="w">
+<div class="hero"><span class="u">Test · A2.2</span><h1>Test A2.2</h1><p>Vêtements · Adjectifs · Météo · Futur proche</p></div>
+<div class="pb" id="pb"><div class="pbr"><span class="t" id="pc"></span><div class="bar"><i id="pf"></i></div><button type="button" class="kbt" id="kbt" aria-expanded="false">⌨ é à ç</button></div><div class="kbk" id="kbk" role="group" aria-label="Accents et symboles"></div></div>
+<div id="app">
+<section class="panel cons" id="p0"><h2>Consigne</h2>
+<p>Réponds à tous les exercices. Le test a <b>8 exercices</b> (40 points).</p>
+<ul><li>Lis bien chaque consigne : il faut parfois écrire, parfois choisir, parfois remettre des mots dans l’ordre ou glisser des mots dans les phrases.</li>
+<li>À la fin, écris ton nom et ton e-mail, puis envoie tes réponses. Ton professeur te communiquera ta note par e-mail.</li></ul>
+<p class="fin">Tu ne pourras plus modifier tes réponses après l’envoi.</p></section>
+<div id="secs"></div>
+<section class="panel" id="pid"><h2 class="st"><span class="n">✉</span>Tes coordonnées</h2>
+<div class="lbg"><div><label class="lbl" for="nm">Nom et prénom</label><input class="lbi" id="nm" type="text"></div>
+<div><label class="lbl" for="em">Adresse e-mail (pour recevoir ta note)</label><input class="lbi" id="em" type="email"></div>
+<div><label class="lbl" for="em2">Écris ton adresse e-mail une deuxième fois</label><input class="lbi" id="em2" type="email"></div></div>
+<div class="lbr"><button type="button" class="btn" id="send">Envoyer mes réponses</button></div><div class="lbm" id="box" aria-live="polite"></div></section>
+</div>
+<section class="panel final" id="final" style="display:none" aria-live="polite"></section>
+</div>
+<script>
+window.onerror=function(m,u,l){var e=document.getElementById("err");if(!e){e=document.createElement("div");e.id="err";e.style.cssText="position:fixed;left:0;right:0;bottom:0;z-index:99;background:#b3261e;color:#fff;font:12px/1.4 monospace;padding:8px 10px";document.body.appendChild(e)}e.textContent="Erreur : "+m+" (l."+l+")";return false};
+var D={"slug":"A2_2_Test_vetements_meteo","title":"Test A2.2 · Vêtements, météo et futur proche","actTitle":"Test A2.2 · Vêtements et météo","url":"https://script.google.com/macros/s/AKfycbwWx1Q5wGZatQ9h7Z894XVqdmY3p_h4jr4vjkroeGR8N48Ljqh51IUuVNgVdOIz9ijm/exec","key":"BNRXvHDNnnFnteE6KrFRT2iTgNIySP-i","lenient":false,"corr":{"nivel":"A2.2","notas":"Test de nivel A2.2 (vocabulario de la ropa y la météo, adjetivos demostrativos, posición del adjetivo y futuro próximo). Ejercicios 1-7 cerrados y autocorregidos; el ejercicio 8 es una producción libre de 3-4 frases. Valora tarea (tiempo + ropa), futuro próximo, adjetivos (concordancia y posición), léxico y ortografía. Sé poco exigente con acentos y erratas de móvil; no esperes estructuras por encima de A2.2."},"secs":[{"n":1,"k":"gaps","max":5,"tema":"le vocabulaire des vêtements","t":"Complétez avec les mots suivants.","bank":["des gants","un maillot de bain","un costume","des bottes","une écharpe","une jupe"],"items":[{"t":"En hiver, j’ai froid aux mains : je mets des ___.","a":"des gants","l":"a","pt":1,"man":0,"hp":0},{"t":"À la piscine, je porte un ___.","a":"un maillot de bain","l":"b","pt":1,"man":0,"hp":0},{"t":"Pour un entretien d’embauche, un homme met souvent un ___.","a":"un costume","l":"c","pt":1,"man":0,"hp":0},{"t":"Pour marcher dans la neige, nous mettons nos ___ aux pieds.","a":"des bottes","l":"d","pt":1,"man":0,"hp":0},{"t":"Il fait froid : elle met une ___ autour du cou.","a":"une écharpe","l":"e","pt":1,"man":0,"hp":0}]},{"n":2,"k":"choice","max":5,"tema":"le vocabulaire des vêtements et des accessoires","t":"Chassez l’intrus.","ask":"Quel est l’intrus ?","items":[{"o":["un pull","un gilet","une veste","des lunettes"],"a":"des lunettes","l":"a","pt":1,"man":0,"hp":0},{"o":["des bottes","des baskets","des sandales","un bonnet"],"a":"un bonnet","l":"b","pt":1,"man":0,"hp":0},{"o":["en coton","en laine","en cuir","à rayures"],"a":"à rayures","l":"c","pt":1,"man":0,"hp":0},{"o":["bleu","jaune","rose","court"],"a":"court","l":"d","pt":1,"man":0,"hp":0},{"o":["une jupe","une robe","un pantalon","un parapluie"],"a":"un parapluie","l":"e","pt":1,"man":0,"hp":0}]},{"n":3,"k":"typed","max":5,"tema":"les adjectifs démonstratifs","w":8,"t":"Écrivez ce, cet, cette ou ces.","items":[{"t":"___ pull est très chaud.","g":[["ce"]],"l":"a","pt":1,"man":0,"hp":0},{"t":"Tu aimes ___ chemise ?","g":[["cette"]],"l":"b","pt":1,"man":0,"hp":0},{"t":"Je prends ___ chaussures noires.","g":[["ces"]],"l":"c","pt":1,"man":0,"hp":0},{"t":"___ été, nous partons au bord de la mer.","g":[["cet"]],"l":"d","pt":1,"man":0,"hp":0},{"t":"Je ne porte jamais ___ cravate.","g":[["cette"]],"l":"e","pt":1,"man":0,"hp":0}]},{"n":4,"k":"choice","max":5,"tema":"la place des adjectifs","t":"Choisissez la bonne forme.","ask":"Quelle est la bonne forme ?","items":[{"o":["une robe rouge","une rouge robe"],"a":"une robe rouge","l":"a","pt":1,"man":0,"hp":0},{"o":["un petit chien","un chien petit"],"a":"un petit chien","l":"b","pt":1,"man":0,"hp":0},{"o":["un pull chaud","un chaud pull"],"a":"un pull chaud","l":"c","pt":1,"man":0,"hp":0},{"o":["une jolie veste","une veste jolie"],"a":"une jolie veste","l":"d","pt":1,"man":0,"hp":0},{"o":["une voiture italienne","une italienne voiture"],"a":"une voiture italienne","l":"e","pt":1,"man":0,"hp":0}]},{"n":5,"k":"order","max":5,"tema":"la place des adjectifs","t":"Remettez les mots dans l’ordre.","items":[{"tok":["Elle","porte","une","robe","verte.","jolie"],"acc":["Elle porte une jolie robe verte."],"l":"a","pt":1,"man":0,"hp":0},{"tok":["J’ai","acheté","un","manteau","noir.","beau"],"acc":["J’ai acheté un beau manteau noir."],"l":"b","pt":1,"man":0,"hp":0},{"tok":["Nous","avons","une","maison","blanche.","petite"],"acc":["Nous avons une petite maison blanche."],"l":"c","pt":1,"man":0,"hp":0},{"tok":["Mon","frère","cherche","un","pantalon.","nouveau"],"acc":["Mon frère cherche un nouveau pantalon."],"l":"d","pt":1,"man":0,"hp":0},{"tok":["Elle","a","un","sac","rouge.","grand"],"acc":["Elle a un grand sac rouge."],"l":"e","pt":1,"man":0,"hp":0}]},{"n":6,"k":"typed","max":5,"tema":"le vocabulaire de la météo","w":12,"t":"Écrivez le mot qui manque.","items":[{"t":"Quand il pleut, j’ouvre mon ___ pour ne pas être mouillé.","g":[["parapluie"]],"l":"a","pt":1,"man":0,"hp":0},{"t":"En hiver, il y a de la ___ dans les montagnes.","g":[["neige"]],"l":"b","pt":1,"man":0,"hp":0},{"t":"Le contraire de « chaud » : il fait ___.","g":[["froid"]],"l":"c","pt":1,"man":0,"hp":0},{"t":"En été, il fait beau : il y a du ___.","g":[["soleil"]],"l":"d","pt":1,"man":0,"hp":0},{"t":"Quand il y a du tonnerre et des éclairs, il y a un ___.","g":[["orage"]],"l":"e","pt":1,"man":0,"hp":0}]},{"n":7,"k":"typed","max":5,"tema":"le futur proche","w":14,"t":"Conjuguez les verbes au futur proche.","items":[{"t":"Demain, nous (visiter) ___ le musée.","g":[["allons visiter"]],"l":"a","pt":1,"man":0,"hp":0},{"t":"Ce week-end, ils (aller) ___ à la montagne.","g":[["vont aller"]],"l":"b","pt":1,"man":0,"hp":0},{"t":"Tu (acheter) ___ un manteau pour l’hiver ?","g":[["vas acheter"]],"l":"c","pt":1,"man":0,"hp":0},{"t":"Je (essayer) ___ cette robe demain.","g":[["vais essayer"]],"l":"d","pt":1,"man":0,"hp":0},{"t":"Vous (faire) ___ du shopping samedi ?","g":[["allez faire"]],"l":"e","pt":1,"man":0,"hp":0}]},{"n":8,"k":"prod","max":5,"tema":"la production écrite","t":"Écrivez un petit texte.","items":[{"q":"Ce week-end, vous allez dans une ville où il fait très froid. Écrivez 3 ou 4 phrases : quel temps va-t-il faire et quels vêtements allez-vous emporter ? Utilisez le futur proche et au moins deux adjectifs.","pts":5,"rows":6,"max":600,"crit":"Tâche (météo + vêtements, 3-4 phrases) ; futur proche (aller + infinitif) ; au moins 2 adjectifs bien accordés et bien placés ; vocabulaire de la météo et des vêtements ; orthographe.","model":"Samedi, il va faire très froid et il va neiger. Je vais emporter un gros manteau noir, une écharpe et des bottes chaudes.","l":"","pt":0,"man":5,"hp":0}]}]};
+(function(){
+function $(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function g(id){return document.getElementById(id)}
+function noAuto(i){i.autocomplete="off";i.autocapitalize="off";i.spellcheck=false;
+ ["autocomplete:off","autocorrect:off","autocapitalize:off","spellcheck:false","data-gramm:false","data-gramm_editor:false","data-enable-grammarly:false","data-lpignore:true","data-1p-ignore:true"].forEach(function(p){var k=p.split(":");i.setAttribute(k[0],k[1])})}
+var KD="ex:"+D.slug,KS="exs:"+D.slug,EM=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+function lget(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+function lset(k,v){try{if(v)localStorage.setItem(k,JSON.stringify(v));else localStorage.removeItem(k)}catch(e){}}
+function rid(){var s="",c="abcdefghijklmnopqrstuvwxyz0123456789";for(var i=0;i<14;i++)s+=c.charAt(Math.floor(Math.random()*c.length));return s}
+function flat(s){return String(s).toLowerCase().replace(/[’`´]/g,"'").replace(/œ/g,"oe").replace(/æ/g,"ae").normalize("NFD").replace(/[̀-ͯ]/g,"")}
+function nrm(s){return flat(s).replace(/[.,;:!?¿¡«»"()]/g," ").replace(/\s+/g," ").trim()}
+function fr(x){return String(Math.round(x*100)/100).replace(".",",")}
+var S=D.secs,st=lget(KD)||{},A=(st.a&&typeof st.a==="object")?st.a:{},sid=st.sid||rid(),sent=false,busy=false,tmr=null;
+function K(si,ii){return si+"_"+ii}
+function kd(s,it){return it.kind||s.k}
+function ea(s,only,fn){s.items.forEach(function(it,ii){if(only===undefined||only===ii)fn(it,ii)})}
+var nm=g("nm"),em=g("em"),em2=g("em2"),box=g("box"),btn=g("send");
+nm.value=st.name||"";em.value=st.email||"";em2.value=st.email2||"";
+nm.setAttribute("autocomplete","name");nm.spellcheck=false;nm.setAttribute("autocapitalize","words");
+[em,em2].forEach(function(e){e.setAttribute("autocomplete","off");e.setAttribute("inputmode","email");e.spellcheck=false;e.setAttribute("autocapitalize","off");e.setAttribute("autocorrect","off")});
+function save(){if(!sent)lset(KD,{sid:sid,a:A,name:nm.value,email:em.value,email2:em2.value})}
+function draft(now){clearTimeout(tmr);if(now){save();return}tmr=setTimeout(save,300)}
+window.addEventListener("pagehide",function(){clearTimeout(tmr);save()});document.addEventListener("visibilitychange",function(){if(document.hidden){clearTimeout(tmr);save()}});
+/* ---------- estado de cada ejercicio ---------- */
+function has(si,ii){var v=A[K(si,ii)],s=S[si],it=s.items[ii];if(v==null)return false;var q=kd(s,it);
+ if(q==="typed")return v.every(function(x){return x&&String(x).trim()});
+ if(q==="order")return v.length===it.tok.length;
+ if(q==="vf")return !!v.v;
+ return !!String(v).trim()}
+function upd(){var n=0,t=0;S.forEach(function(s,si){s.items.forEach(function(_,ii){t++;if(has(si,ii))n++})});
+ g("pc").textContent=n+" / "+t+" réponses";g("pf").style.width=(t?n/t*100:0)+"%";draft()}
+function lock(on){document.querySelectorAll("#secs button,#secs input,#secs textarea,#pid input").forEach(function(e){e.disabled=on})}
+/* ---------- accentos ---------- */
+var KL=["é","è","ê","ë","à","â","ç","î","ï","ô","ö","ù","û","ü","œ","æ","’","«","»"],KU=["É","È","Ê","Ë","À","Â","Ç","Î","Ï","Ô","Ö","Ù","Û","Ü","Œ","Æ","’","«","»"],up=false,kbs=[],lastF=null,NB=" ";
+document.addEventListener("focusin",function(e){var t=e.target;if(t&&(t.tagName==="TEXTAREA"||(t.tagName==="INPUT"&&t.type==="text")))lastF=t});
+function ins(ch){var t=lastF;if(!t||t.disabled)return;var v=t.value,a=typeof t.selectionStart==="number"?t.selectionStart:v.length,b=typeof t.selectionEnd==="number"?t.selectionEnd:a;
+ var add=ch==="«"?"«"+NB:(ch==="»"?NB+"»":ch);if(t.maxLength>0&&v.length-(b-a)+add.length>t.maxLength)return;t.focus();t.value=v.slice(0,a)+add+v.slice(b);var p=a+add.length;try{t.setSelectionRange(p,p)}catch(e){}t.dispatchEvent(new Event("input",{bubbles:true}))}
+function kbTap(el,fn){var last=0;function h(e){var n=Date.now();if(n-last<120)return;last=n;fn(e)}
+ el.addEventListener("mousedown",function(e){e.preventDefault()});el.addEventListener("touchstart",function(e){e.preventDefault();h(e)},{passive:false});el.addEventListener("click",h)}
+var kb=g("kbk"),sh=$("button","sh","⇧ Majuscules");
+function kbPaint(){var L=up?KU:KL;kbs.forEach(function(x,i){x.textContent=L[i];x.setAttribute("aria-label","Insérer "+L[i])});sh.classList.toggle("on",up);sh.setAttribute("aria-pressed",up?"true":"false")}
+sh.type="button";sh.tabIndex=-1;kbTap(sh,function(){up=!up;kbPaint()});kb.appendChild(sh);
+KL.forEach(function(c,i){var b=$("button",null,c);b.type="button";b.tabIndex=-1;kbTap(b,function(){ins((up?KU:KL)[i]);if(up&&i<15){up=false;kbPaint()}});kb.appendChild(b);kbs.push(b)});kbPaint();
+g("kbt").addEventListener("click",function(){var o=!g("pb").classList.contains("open");g("pb").classList.toggle("open",o);g("kbt").setAttribute("aria-expanded",o?"true":"false")});
+/* ---------- construcción de los ejercicios ---------- */
+function lab(it){return it.l?'<span class="lt">'+it.l+'.</span>':""}
+function rTyped(s,si,bx,only){ea(s,only,function(it,ii){var k=K(si,ii),parts=it.t.split("___"),v=A[k];
+ if(!Array.isArray(v)||v.length!==parts.length-1){v=[];for(var j=0;j<parts.length-1;j++)v.push("");A[k]=v}
+ var row=$("div","it tl");row.innerHTML=lab(it);
+ parts.forEach(function(p,j){row.appendChild(document.createTextNode(p));if(j<parts.length-1){var i=$("input","ti");i.type="text";noAuto(i);i.value=v[j]||"";i.style.width=(s.w||12)+"ch";i.maxLength=60;i.setAttribute("enterkeyhint","next");i.setAttribute("aria-label",(it.l||"")+" "+(j+1));
+  i.addEventListener("input",function(){v[j]=i.value;upd()});row.appendChild(i)}});bx.appendChild(row)})}
+function rOrder(s,si,bx,only){ea(s,only,function(it,ii){var k=K(si,ii),pl=A[k];if(!Array.isArray(pl)||pl.some(function(x){return typeof x!=="number"||x<0||x>=it.tok.length})||new Set(pl).size!==pl.length){pl=[];A[k]=pl}
+ var row=$("div","it"),line=$("div","oline"),pool=$("div","opool"),q=$("div","q",lab(it)+"Remets les mots dans l’ordre :"),rs=$("button","rst","Effacer");rs.type="button";
+ function paint(){line.innerHTML="";pool.innerHTML="";
+  pl.forEach(function(ti,pos){var b=$("button","chip on",esc(it.tok[ti]));b.type="button";b.disabled=sent||busy;b.addEventListener("click",function(){if(sent||busy)return;pl.splice(pos,1);paint();upd()});line.appendChild(b)});
+  if(!pl.length)line.appendChild($("span","ph","Touche les mots dans le bon ordre…"));
+  it.tok.forEach(function(w,ti){if(pl.indexOf(ti)>-1)return;var b=$("button","chip",esc(w));b.type="button";b.disabled=sent||busy;b.addEventListener("click",function(){if(sent||busy)return;pl.push(ti);paint();upd()});pool.appendChild(b)})}
+ rs.addEventListener("click",function(){if(sent||busy)return;pl.length=0;paint();upd()});
+ row.appendChild(q);row.appendChild(line);row.appendChild(pool);row.appendChild(rs);bx.appendChild(row);paint()})}
+function rChoice(s,si,bx,only){ea(s,only,function(it,ii){var k=K(si,ii),row=$("div","it"),gap=null;
+ var q=$("div","q",lab(it)+(it.q?esc(it.q).replace("___",'<span class="gp"></span>'):(s.ask||"")));gap=q.querySelector(".gp");row.appendChild(q);
+ var o=$("div","opts");function paint(){if(gap){gap.textContent=A[k]||"";gap.classList.toggle("f",!!A[k])}
+  [].forEach.call(o.children,function(b){b.classList.toggle("on",A[k]===b.dataset.v);b.setAttribute("aria-pressed",A[k]===b.dataset.v?"true":"false")})}
+ it.o.forEach(function(x){var b=$("button","opt",esc(x));b.type="button";b.dataset.v=x;b.addEventListener("click",function(){if(sent||busy)return;A[k]=x;paint();upd()});o.appendChild(b)});
+ row.appendChild(o);bx.appendChild(row);paint()})}
+function rGaps(s,si,bx){var bank=$("div","bank"),selW=null;bx.appendChild(bank);var gbs=[];
+ function put(ii,w){s.items.forEach(function(_,j){if(A[K(si,j)]===w)delete A[K(si,j)]});if(w)A[K(si,ii)]=w;else delete A[K(si,ii)];selW=null;paint();upd()}
+ function paint(){bank.innerHTML="";s.bank.forEach(function(w){var u=s.items.some(function(_,ii){return A[K(si,ii)]===w}),b=$("button","chip"+(selW===w?" sel":"")+(u?" used":""),esc(w));b.type="button";b.draggable=!sent;b.disabled=sent||busy;
+   b.addEventListener("click",function(){if(sent||busy)return;selW=selW===w?null:w;paint()});
+   b.addEventListener("dragstart",function(e){selW=w;try{e.dataTransfer.setData("text/plain",w)}catch(x){}});bank.appendChild(b)});
+  gbs.forEach(function(x){var v=A[K(si,x.ii)];x.b.textContent=v||"……";x.b.classList.toggle("f",!!v);x.b.disabled=sent||busy})}
+ s.items.forEach(function(it,ii){var row=$("div","it tl");row.innerHTML=lab(it);var parts=it.t.split("___");
+  row.appendChild(document.createTextNode(parts[0]));var b=$("button","gb","……");b.type="button";b.setAttribute("aria-label",(it.l||"")+" : emplacement");
+  b.addEventListener("click",function(){if(sent||busy)return;if(selW)put(ii,selW);else if(A[K(si,ii)])put(ii,null)});
+  b.addEventListener("dragover",function(e){e.preventDefault();b.classList.add("ov")});b.addEventListener("dragleave",function(){b.classList.remove("ov")});
+  b.addEventListener("drop",function(e){e.preventDefault();b.classList.remove("ov");var w="";try{w=e.dataTransfer.getData("text/plain")}catch(x){}w=w||selW;if(w&&s.bank.indexOf(w)>-1&&!(sent||busy))put(ii,w)});
+  row.appendChild(b);row.appendChild(document.createTextNode(parts[1]||""));bx.appendChild(row);gbs.push({ii:ii,b:b})});
+ paint()}
+function rVf(s,si,bx,only){ea(s,only,function(it,ii){var k=K(si,ii),v=A[k];if(!v||typeof v!=="object"||Array.isArray(v)){v={v:"",j:""};A[k]=v}
+ var row=$("div","it"),q=$("div","q",lab(it)+esc(it.q)),r=$("div","vfr");row.appendChild(q);
+ [["v","Vrai"],["f","Faux"]].forEach(function(x){var b=$("button","vfb"+(v.v===x[0]?" on":""),x[1]);b.type="button";b.dataset.v=x[0];b.setAttribute("aria-pressed",v.v===x[0]?"true":"false");
+  b.addEventListener("click",function(){if(sent||busy)return;v.v=x[0];[].forEach.call(r.children,function(y){y.classList.toggle("on",y.dataset.v===v.v);y.setAttribute("aria-pressed",y.dataset.v===v.v?"true":"false")});upd()});r.appendChild(b)});
+ row.appendChild(r);
+ if(it.just){var t=$("textarea","lbt");noAuto(t);t.lang="fr";t.maxLength=400;t.rows=2;t.value=v.j||"";t.placeholder="Justifie ta réponse (une phrase du texte)";t.setAttribute("aria-label","Justification "+(it.l||""));t.addEventListener("input",function(){v.j=t.value;upd()});row.appendChild(t)}
+ bx.appendChild(row)})}
+function rOpen(s,si,bx,only){ea(s,only,function(it,ii){var k=K(si,ii),row=$("div","it"),q=$("div","q",lab(it)+esc(it.q));row.appendChild(q);
+ var t=$("textarea","lbt");noAuto(t);t.lang="fr";t.maxLength=it.max||400;t.rows=it.rows||2;t.value=typeof A[k]==="string"?A[k]:"";t.setAttribute("aria-label",(it.l||"")+" réponse");
+ t.addEventListener("input",function(){A[k]=t.value;upd()});row.appendChild(t);bx.appendChild(row)})}
+function rProd(s,si,bx,only){ea(s,only,function(it,ii){var k=K(si,ii),row=$("div","it"),q=$("div","q",lab(it)+esc(it.q));row.appendChild(q);
+ var t=$("textarea","lbt");noAuto(t);t.lang="fr";t.maxLength=it.max||600;t.rows=it.rows||5;t.value=typeof A[k]==="string"?A[k]:"";t.placeholder=it.ph||"Écris ta réponse ici…";t.setAttribute("aria-label",(it.l||"")+" réponse libre");
+ t.addEventListener("input",function(){A[k]=t.value;upd()});row.appendChild(t);bx.appendChild(row)})}
+var R={typed:rTyped,order:rOrder,choice:rChoice,gaps:rGaps,vf:rVf,open:rOpen,prod:rProd};R.mixed=function(s,si,bx){s.items.forEach(function(it,ii){R[it.kind](s,si,bx,ii)})};var root=g("secs");
+S.forEach(function(s,si){var p=$("section","panel");p.id="s"+si;
+ var h=$("h2","st",'<span class="n">'+s.n+'</span><span>'+esc(s.t)+'</span><span class="m">/ '+fr(s.max)+'</span>');p.appendChild(h);
+ if(s.sub)p.appendChild($("p","sub",esc(s.sub)));if(s.read)p.appendChild($("div","read",s.read));
+ var bx=$("div");p.appendChild(bx);R[s.k](s,si,bx);root.appendChild(p)});
+/* ---------- corrección automática ---------- */
+function inList(v,L){var n=nrm(v);return L.some(function(x){return nrm(x)===n})}
+function kw(s){return flat(s).replace(/-/g," ").replace(/\s+/g," ")}
+function hit1(T,x){if(x.slice(0,3)==="re:")return new RegExp(x.slice(3)).test(T);return T.indexOf(kw(x))>-1}
+function hit(text,groups,min,forb){var T=kw(text),n=0;groups.forEach(function(g){if(g.some(function(x){return hit1(T,x)}))n++});return n>=(min||groups.length)&&!(forb||[]).some(function(x){return hit1(T,x)})}
+function scoreItem(s,si,ii){var it=s.items[ii],v=A[K(si,ii)],q=kd(s,it),o={l:it.l,rep:"",ok:null,exp:"",auto:0,heur:0,h:false,q:it.q||"",c:it.crit||"",man:it.man||0,amax:(it.pt||0)+(it.hp||0),hmax:it.hp||0};
+ if(q==="typed"){v=Array.isArray(v)?v:[];o.rep=v.map(function(x){return String(x||"").trim()}).join(" / ");o.exp=it.g.map(function(a){return a[0]}).join(" / ");
+  if(it.g.every(function(a,j){return !!(v[j]&&inList(v[j],a))}))o.auto=it.pt}
+ else if(q==="order"){var pl=Array.isArray(v)?v:[];o.rep=pl.map(function(t){return it.tok[t]}).join(" ");o.exp=it.acc[0];
+  if(pl.length===it.tok.length&&inList(o.rep,it.acc))o.auto=it.pt}
+ else if(q==="choice"||q==="gaps"){o.rep=typeof v==="string"?v:"";o.exp=Array.isArray(it.a)?it.a[0]:it.a;
+  if(!it.rev&&o.rep&&inList(o.rep,Array.isArray(it.a)?it.a:[it.a]))o.auto=it.pt}
+ else if(q==="vf"){v=(v&&typeof v==="object")?v:{v:"",j:""};var j=String(v.j||"").trim();o.rep=(v.v==="v"?"Vrai":v.v==="f"?"Faux":"—")+(it.just?" — "+(j||"(sans justification)"):"");o.exp=(it.a?"Vrai":"Faux")+(it.model?" — "+it.model:"");
+  if(!!v.v&&((v.v==="v")===!!it.a)){o.auto=it.pt;if(it.jreq){o.h=true;if(j&&hit(j,it.jreq,it.min,it.forb)){o.auto+=it.hp;o.heur=it.hp}}}else if(it.jreq)o.h=true}
+ else if(q==="prod"){o.rep=typeof v==="string"?v.trim():"";o.exp=it.model||"";o.pr=true;o.h=true}
+ else{o.rep=typeof v==="string"?v.trim():"";o.exp=it.model||"";if(it.req){o.h=true;if(o.rep&&hit(o.rep,it.req,it.min,it.forb)){o.auto=it.hp;o.heur=it.hp}}}
+ o.ok=o.amax>0?(o.auto>=o.amax-1e-9?true:(o.auto<1e-9?false:null)):null;
+ return o}
+function scoreSec(si){var s=S[si],rows=[],pts=0,am=0,mm=0,hp=0,hm=0;s.items.forEach(function(_,ii){var o=scoreItem(s,si,ii);rows.push(o);pts+=o.auto;am+=o.amax;mm+=o.man;hp+=o.heur;hm+=o.hmax});return{rows:rows,pts:pts,am:am,mm:mm,hp:hp,hm:hm}}
+window.__ex={score:scoreSec,A:A};
+/* ---------- envío ---------- */
+function msg(cls,html,acts){box.className="lbm "+cls;box.innerHTML=html;if(acts&&acts.length){var d=$("div","lba");acts.forEach(function(x){var b=$("button",x.c||"btn",esc(x.t));b.type="button";b.addEventListener("click",x.f);d.appendChild(b)});box.appendChild(d)}}
+function collect(){return{name:nm.value.trim(),email:em.value.trim(),email2:em2.value.trim()}}
+function focusEl(e){try{e.focus();e.scrollIntoView({block:"center"})}catch(x){}}
+function copyTxt(d,P){var t=[document.title,"","Nom : "+d.name,"E-mail : "+d.email,"Date : "+new Date().toLocaleString("fr-FR"),""];P.items.forEach(function(it){t.push(it.q,it.a,"")});return t.join("\n")}
+function download(txt){try{var b=new Blob([txt],{type:"text/plain;charset=utf-8"}),u=URL.createObjectURL(b),l=document.createElement("a");l.href=u;l.download="mes_reponses.txt";document.body.appendChild(l);l.click();setTimeout(function(){document.body.removeChild(l);URL.revokeObjectURL(u)},500)}catch(e){}}
+function build(d){var items=[],ex={t:D.title,secs:[],ap:0,am:0,mm:0,hp:0,hm:0},w=Math.round(1000/S.length)/100;
+ S.forEach(function(s,si){var r=scoreSec(si);ex.ap+=r.pts;ex.am+=r.am;ex.mm+=r.mm;ex.hp+=r.hp;ex.hm+=r.hm;
+  var q="Exercice "+s.n+" — "+s.t+" [/ "+fr(s.max)+" · auto : "+fr(r.pts)+" / "+fr(r.am)+(r.mm?" · à corriger : "+fr(r.mm):"")+"]";
+  var a=r.rows.map(function(o){return (o.l?o.l+". ":"")+(o.rep||"(vide)")}).join("\n");
+  items.push({q:q.slice(0,1900),w:w,a:a.slice(0,3900)});
+  ex.secs.push({n:s.n,t:s.t,tm:s.tema||"",max:s.max,pts:r.pts,am:r.am,mm:r.mm,rows:r.rows.map(function(o){var x={l:o.l||"",r:(o.rep||"").slice(0,700),ok:o.ok};if(o.amax>0){x.p=o.auto;x.x=o.amax}if(o.h){x.h=o.pr?2:1;if(o.q)x.q=String(o.q).slice(0,300);if(o.pr&&o.c)x.c=String(o.c).slice(0,300)}if(o.exp)x.e=String(o.exp).slice(0,200);if(o.man)x.m=o.man;return x})})});
+ return{key:D.key,v:1,id:sid,slug:D.slug,title:document.title,actId:"ex1",actTitle:D.actTitle,corr:D.corr||null,name:d.name,email:d.email,lmsId:"web",lmsName:"",sentAt:new Date().toISOString(),items:items,exam:ex}}
+function validate(){[nm,em,em2].forEach(function(x){x.classList.remove("bad")});var d=collect();
+ if(!d.name){nm.classList.add("bad");msg("err","Indique ton nom et ton prénom.");focusEl(nm);return false}
+ if(!EM.test(d.email)){em.classList.add("bad");msg("err","Indique une adresse e-mail valide.");focusEl(em);return false}
+ if(d.email.toLowerCase()!==d.email2.toLowerCase()){em2.classList.add("bad");msg("err","Les deux adresses e-mail ne sont pas identiques. Vérifie-les.");focusEl(em2);return false}
+ return true}
+function onSend(){if(sent||busy)return;if(!validate())return;var d=collect(),t=0,n=0;S.forEach(function(s,si){s.items.forEach(function(_,ii){t++;if(has(si,ii))n++})});
+ var vide=t-n;msg("warn",(vide?"<div>Il reste <b>"+vide+" réponse"+(vide>1?"s":"")+" vide"+(vide>1?"s":"")+"</b>.</div>":"")+"<div style=\"margin-top:"+(vide?8:0)+"px\">Une fois envoyées, tes réponses ne pourront plus être modifiées. Envoyer ?</div>",
+  [{t:"Oui, envoyer",f:function(){sendNow(collect())}},{t:"Continuer",c:"btn cb2",f:function(){box.className="lbm"}}]);try{box.scrollIntoView({block:"center"})}catch(x){}}
+function post(p){var body=JSON.stringify(p),ctl=window.AbortController?new AbortController():null,to=setTimeout(function(){if(ctl)ctl.abort()},30000),
+ o={method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:body,redirect:"follow"};if(ctl)o.signal=ctl.signal;
+ return fetch(D.url,o).then(function(r){clearTimeout(to);return r.text()}).then(function(t){var j;try{j=JSON.parse(t)}catch(e){throw new Error("Réponse inattendue du serveur")}
+  if(j&&j.ok)return "ok";throw new Error((j&&j.error)||"Erreur du serveur")}).catch(function(e){clearTimeout(to);
+  if(e&&e.name==="TypeError")return fetch(D.url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:body}).then(function(){return "unconf"});
+  if(e&&e.name==="AbortError")throw new Error("délai dépassé");throw e})}
+function showFinal(prev){g("app").style.display="none";g("pb").style.display="none";var f=g("final");f.style.display="block";
+ var h='<div class="ic">✅</div><p><b>Merci !</b> Tes réponses ont bien été envoyées.</p>';
+ h+='<p class="sm">Ton professeur te communiquera ta note par e-mail.</p>'+(prev?'<p class="sm">Tu as déjà envoyé ce test depuis cet appareil.</p>':'');
+ h+='<p class="sm"><button type="button" class="rst" id="nv">Un autre élève utilise cet appareil : recommencer</button></p>';
+ f.innerHTML=h;g("nv").addEventListener("click",function(){lset(KS,null);lset(KD,null);location.reload()});try{window.scrollTo(0,0)}catch(e){}}
+function sendNow(d){if(/REEMPLAZAR/.test(D.url)||/REEMPLAZAR/.test(D.key)){msg("err","Page non configurée : l’adresse du script d’envoi est manquante. Préviens ton professeur.");return}
+ busy=true;btn.disabled=true;lock(true);msg("warn","Envoi en cours…");var P=build(d);
+ post(P).then(function(r){if(r==="ok"||D.lenient){sent=true;busy=false;lset(KD,null);lset(KS,{e:d.email,t:new Date().toISOString(),u:r==="ok"?0:1});showFinal(false)}
+  else{busy=false;btn.disabled=false;lock(false);btn.textContent="Renvoyer";msg("warn","Ton navigateur n’a pas pu confirmer la réception. Clique sur « Renvoyer » pour réessayer (aucun doublon ne sera créé) ou préviens ton professeur.",[{t:"Télécharger une copie",c:"btn cb2",f:function(){download(copyTxt(d,P))}}])}})
+ .catch(function(e){busy=false;btn.disabled=false;lock(false);msg("err","L’envoi a échoué ("+esc(String(e&&e.message||e))+"). Tes réponses sont conservées : vérifie ta connexion puis clique de nouveau sur « Envoyer ».",[{t:"Télécharger une copie",c:"btn cb2",f:function(){download(copyTxt(d,P))}}])})}
+[nm,em,em2].forEach(function(x){x.addEventListener("input",function(){x.classList.remove("bad");draft()})});
+btn.addEventListener("click",onSend);
+upd();
+var ks=lget(KS);if(ks)showFinal(true);
+})();
+</script></body></html>
